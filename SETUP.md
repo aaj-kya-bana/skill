@@ -32,7 +32,7 @@ ChatGPT doesn't load skills. The Aaj Kya Bana server sends the same rules as its
 ## Claude Code
 
 ```sh
-/plugin marketplace add aajkyabana/aaj-kya-bana-skill   # or ./skill from a clone of the app repo
+/plugin marketplace add aaj-kya-bana/skill   # or ./skill from a clone of the app repo
 /plugin install aaj-kya-bana@aaj-kya-bana
 ```
 
