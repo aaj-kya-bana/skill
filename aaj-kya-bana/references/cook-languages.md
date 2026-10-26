@@ -14,7 +14,7 @@ Aaj Kya Bana uses six locales. Two people read what you write, and each may use 
 ## Which language
 
 - **Cook card**: the helper's `language` from `get_household`. Never the app's language. A Telugu family with a cook from Bihar sends the card in Hinglish.
-- **Everything the person reads**: `log_activity` summaries, `Cart.note`, `fail_task` reasons and your chat replies. Use the person's app locale, `User.locale`. `get_household` does not return it in the current contract. When it is missing, use the language the person writes to you in, or `en` in an absent run.
+- **Everything the person reads**: `log_activity` summaries, `Cart.note`, `fail_task` reasons and your chat replies. Use the person's app locale, the `locale` that `get_household` returns. When it is missing, use the language the person writes to you in, or `en` in an absent run.
 
 Product names stay in Latin letters in every locale: Instamart, Zepto, Zomato, Swiggy, WhatsApp. Numbers use Latin digits and Indian grouping (₹1,43,300). Times are the cook's visit times as people say them: "7:30".
 
@@ -91,6 +91,30 @@ Rajma aaj raat bhigo dena. Paneer fridge mein hai.
 
 You write only the menu card. The backend writes the `change`, `off_day` and `groceries` messages from the `cook.*` templates in `i18n/strings/<locale>.json`. Use the same register as those templates so the cook gets one voice from the household.
 
-## When you are unsure
+## A male cook
 
-Hindi, Hinglish and Marathi verbs change with the cook's gender ("आएंगी" or "आएंगे"), and Marathi "ताई" assumes a woman. The Helper record has no gender field. Follow the name and how the person refers to the cook. If you can't tell, write the sentence so the verb doesn't refer to the cook, such as "सामान 7:30 तक आ जाएगा".
+Each helper from `get_household` has `gender`, `"female"` unless the household set `"male"`. The examples above are for a woman. When `gender` is `male`:
+
+- Hindi and Hinglish verbs that refer to the cook take the masculine form: "आएंगे", "aayenge", not "आएंगी", "aayengi". Imperatives such as "bhigo dena" and "ले लीजिए" stay the same.
+- Marathi calls him "दादा" instead of "ताई". Marathi तुम्ही-form verbs already read the same for a man or a woman.
+- Telugu "గారు", Kannada "ಅವರೇ" and English don't change.
+
+The backend's `cook.*` templates follow the same rule through their `.m` keys, so match them.
+
+`hi-Latn`, male cook
+```
+Ramesh ji, kal ka khana, 4 log
+Nashta: poha, chai
+Lunch: rajma chawal, kachumber
+Raat: phulka, palak paneer
+Rajma aaj raat bhigo dena. Aap aayenge tab tak paneer aa jayega.
+```
+
+`mr`, male cook
+```
+रमेश दादा, उद्याचं जेवण, 4 जण
+नाश्ता: पोहे, चहा
+दुपार: राजमा भात, कोशिंबीर
+रात्री: फुलके, पालक पनीर
+राजमा आज रात्री भिजत घाला. पनीर फ्रिजमध्ये आहे.
+```
