@@ -26,6 +26,7 @@ Absent runs fill carts and record things. They never place an order and never as
 4. Do the task by `kind`:
    - `fill_cart`: build the shopping list, fill the vendor cart (below), then `complete_task` with the Cart and `set_cook_card` for that helper and date.
    - `plan_takeout`: search the food app, `complete_task` with a TakeoutPlan of two or three suggestions. Build no food cart unless the person asks.
+   - `check_pantry`: `get_pantry_check`, look at every photo, `update_pantry` with level, `amount` and `confidence` for each item you can see (out = none or empty container; low = under 3 days of planned meals, or under a quarter of capacity for a staple). Then `complete_task` with `{ changed, unreadable }`. Never guess an item you can't see.
    - `sync_orders`: see step 5, then `complete_task` with `{ synced: <number of orders you recorded> }`.
 5. Read each vendor's file first (links under "Filling the cart"), then `get_orders` from each vendor you are connected to. For Instamart pass `orderType: "INSTAMART"`; the default returns nothing. Then `record_orders` with what they show (recording twice is a no-op), and `update_pantry` to `have` for groceries that arrived.
 6. If the vendor errors or nothing usable comes back, `fail_task` with a reason the person can act on ("Instamart doesn't deliver to the saved address"). If you must stop midway, `release_task`. Never leave a task claimed.
@@ -38,7 +39,7 @@ Absent runs fill carts and record things. They never place an order and never as
 - Respect `household.diet`. Don't add eggs for a veg home.
 - Never buy, plan or order anything in `tastes.avoid`. Follow `tastes.notes`.
 - Do only the jobs in `household.jobs`. Skip a task whose job isn't enabled and say so.
-- Skip anything in `household.staples`. Skip pantry items at `have`. Buy items at `low` or `out`. An ingredient the pantry doesn't list is needed: buy it unless it is a staple.
+- Never buy a staple for a recipe. Skip pantry items at `have`. Buy items at `low` or `out`, staples included, as restock lines (`reason: "restock"`) sized back up to the spot's `capacity`. An ingredient the pantry doesn't list is needed: buy it unless it is a staple.
 - Merge the same ingredient across dishes and record every dish it serves in `forDishes`.
 - Pick the pack, or count of packs, that covers the recipe quantity with the least left over. 600 g of tomatoes is one 500 g pack plus one 250 g pack, or a 1 kg pack if that is cheaper, not three 500 g packs.
 - Prices come only from the vendor's tool results. A price you didn't see is `null`. Never estimate one.
