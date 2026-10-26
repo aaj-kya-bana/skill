@@ -18,7 +18,7 @@ Zomato publishes features, not tool names (unverified: names and schemas). Read 
 ## Planning takeout (`plan_takeout`)
 
 1. Read the slot and the household's `diet` from the task and `get_household`.
-2. Find two or three restaurants that deliver now and fit the diet. A veg home gets pure-veg places or veg dishes only.
+2. Find two or three restaurants that deliver now and fit the diet and `tastes`, on the first app in `apps.takeout` that has a server. A veg home gets pure-veg places or veg dishes only.
 3. For each, pick dishes that feed `household.people`, using dish names from the menu.
 4. `complete_task` with `{ app: "zomato", suggestions: [{ restaurant, dishes, pricePaise }] }`. `pricePaise` is the menu total, or `null` if you didn't see prices.
 

@@ -20,7 +20,7 @@ Absent runs fill carts and record things. They never place an order and never as
 
 ## The loop
 
-1. `get_household` once per run. Keep `people`, `diet`, `staples`, `groceryApp`, the pantry, and each helper's `language`.
+1. `get_household` once per run. Keep `people`, `diet`, `tastes`, `jobs`, `apps`, `staples`, `groceryApp`, the pantry, and each helper's `language`.
 2. `next_tasks` returns due open tasks with `context` (date, slots, meals, visit start). No tasks means nothing to do. Say so in one line and stop.
 3. `claim_task` each task before touching a vendor. If the claim errors, another agent holds it. Skip it.
 4. Do the task by `kind`:
@@ -36,6 +36,8 @@ Absent runs fill carts and record things. They never place an order and never as
 
 - Start from each meal's `dishes`. Servings are `meal.servings`, or `household.people` when that is null. Scale every recipe quantity to that number.
 - Respect `household.diet`. Don't add eggs for a veg home.
+- Never buy, plan or order anything in `tastes.avoid`. Follow `tastes.notes`.
+- Do only the jobs in `household.jobs`. Skip a task whose job isn't enabled and say so.
 - Skip anything in `household.staples`. Skip pantry items at `have`. Buy items at `low` or `out`.
 - Merge the same ingredient across dishes and record every dish it serves in `forDishes`.
 - Pick the pack, or count of packs, that covers the recipe quantity with the least left over. 600 g of tomatoes is one 500 g pack plus one 250 g pack, or a 1 kg pack if that is cheaper, not three 500 g packs.
@@ -84,7 +86,7 @@ Read [references/cook-languages.md](references/cook-languages.md) before your fi
 
 ## Other requests
 
-- **Plan the week**: read `get_plan` for the coming 7 days and `get_household`. Propose dishes for the slots each cook visit `covers`, matching `diet`, then `set_meals` once the person agrees. In an absent run, fill only empty slots.
+- **Plan the week**: read `get_plan` for the coming 7 days and `get_household`. Propose dishes for the slots each cook visit `covers`, matching `diet` and drawn from `tastes.cuisines` and `tastes.likes`, never `tastes.dislikes`, then `set_meals` once the person agrees. In an absent run, fill only empty slots.
 - **Cook is off**: the person marks the absence in the Aaj Kya Bana app, which creates `plan_takeout` tasks. Run those. There is no MCP tool for absences.
 - **Cleaning**: you can't book Snabbit, Pronto or Urban Company InstaHelp. Tell the person the Aaj Kya Bana app opens their cleaning app in one tap.
 - **Scheduling this loop**: [references/scheduling.md](references/scheduling.md).
