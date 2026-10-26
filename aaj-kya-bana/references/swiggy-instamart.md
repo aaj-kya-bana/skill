@@ -26,7 +26,7 @@ Other tools exist (`list_coupons`, `apply_coupon`, `get_payment_options`, `track
 5. `get_cart` again. Report `removedOutOfStockItems` and `reducedQuantityItems` from the update response as `product: null` or a note. Take prices from this cart.
 6. Instamart has a ₹99 minimum order (from Swiggy's grocery recipe page, not the tool reference). Below it, add `"Below ₹99 minimum"` to the note.
 
-Prices: `offerPrice` is what the person pays (unverified: whether it is rupees or paise. Convert to paise by checking it against `billBreakdown.toPay`).
+`offerPrice` is what the person pays. Convert it to paise for the Cart, checking the sum against `billBreakdown.toPay` (unverified: whether Swiggy returns rupees or paise).
 
 ## Placing the order (present only)
 

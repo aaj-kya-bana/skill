@@ -2,7 +2,7 @@
 
 Aaj Kya Bana makes a `fill_cart` task due `household.leadMinutes` (default 120) before each cook visit, and a `sync_orders` task at 22:00. Something has to wake an agent to run them. Pick one way below. Hourly is enough, since `next_tasks` returns only what is due.
 
-Every scheduled run is absent: no one is there to confirm, so it never places an order. Use this prompt everywhere:
+Every scheduled run is absent. No one is there to confirm, so it never places an order. Use this prompt everywhere:
 
 ```
 Use the aaj-kya-bana skill. This is an unattended run and the person is not present. Work through every due Aaj Kya Bana task, then stop. Do not place any order.
@@ -15,7 +15,7 @@ Runs on Anthropic's cloud with your claude.ai connectors. Needs a Pro, Max, Team
 1. Add the connectors at https://claude.ai/customize/connectors: Aaj Kya Bana, Swiggy Instamart, Zepto (see SETUP.md). Routines include all connected connectors by default. Servers added locally with `claude mcp add` don't appear there.
 2. Create the routine at https://claude.ai/code/routines (New task), or run `/schedule` in Claude Code. Paste the prompt above.
 3. Add a schedule trigger, for example every hour from 6:00 to 22:00. Custom cron runs at most once an hour and is UTC unless prefixed, as in `CRON_TZ=Asia/Kolkata 0 6-22 * * *`.
-4. Optional, so Aaj Kya Bana wakes it exactly when a task is due: add an **API trigger** in the routine's edit dialog on the web. Copy the Fire URL and the token, which is shown once. Register both with Aaj Kya Bana (below).
+4. Optional. To let Aaj Kya Bana wake the routine when a task is due, add an **API trigger** in the routine's edit dialog on the web. Copy the Fire URL and the token, which is shown once. Register both with Aaj Kya Bana (below).
 
 The routine receives the fire text inside a `<routine-fire-payload>` block. The prompt above doesn't need it, since `next_tasks` finds the work.
 

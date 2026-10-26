@@ -26,7 +26,7 @@ Build no cart unless the person asks.
 
 ## Placing the order (present only)
 
-Zomato documents no confirmation rule. Use the same one as groceries: show the restaurant, the dishes, the total and the delivery address. Wait for an explicit yes. Place once. Then `record_orders` with `app: "zomato"` and `kind: "food"`.
+Zomato documents no confirmation rule. Use the grocery rule. Show the restaurant, the dishes, the total and the delivery address. Wait for an explicit yes. Place once. Then `record_orders` with `app: "zomato"` and `kind: "food"`.
 
 ## Client support
 
