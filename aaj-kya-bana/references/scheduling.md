@@ -49,10 +49,10 @@ Install the plugin and sign in to each server once in an interactive session (`/
 `crontab -e`:
 
 ```cron
-0 6-22 * * * cd "$HOME" && /usr/local/bin/claude -p "Use the aaj-kya-bana skill. This is an unattended run and the person is not present. Work through every due Aaj Kya Bana task, then stop. Do not place any order." --permission-mode dontAsk --allowedTools "mcp__plugin_aaj-kya-bana_aaj-kya-bana__*,mcp__plugin_aaj-kya-bana_swiggy-instamart__get_addresses,mcp__plugin_aaj-kya-bana_swiggy-instamart__search_products,mcp__plugin_aaj-kya-bana_swiggy-instamart__your_go_to_items,mcp__plugin_aaj-kya-bana_swiggy-instamart__get_cart,mcp__plugin_aaj-kya-bana_swiggy-instamart__update_cart,mcp__plugin_aaj-kya-bana_swiggy-instamart__get_orders" --disallowedTools "mcp__plugin_aaj-kya-bana_swiggy-instamart__checkout" >> "$HOME/.aaj-kya-bana.log" 2>&1
+0 6-22 * * * cd "$HOME" && /usr/local/bin/claude -p "Use the aaj-kya-bana skill. This is an unattended run and the person is not present. Work through every due Aaj Kya Bana task, then stop. Do not place any order." --permission-mode dontAsk --allowedTools "Read(~/.claude/plugins/**),mcp__plugin_aaj-kya-bana_aaj-kya-bana__*,mcp__plugin_aaj-kya-bana_swiggy-instamart__get_addresses,mcp__plugin_aaj-kya-bana_swiggy-instamart__search_products,mcp__plugin_aaj-kya-bana_swiggy-instamart__your_go_to_items,mcp__plugin_aaj-kya-bana_swiggy-instamart__get_cart,mcp__plugin_aaj-kya-bana_swiggy-instamart__update_cart,mcp__plugin_aaj-kya-bana_swiggy-instamart__get_orders" --disallowedTools "mcp__plugin_aaj-kya-bana_swiggy-instamart__checkout" >> "$HOME/.aaj-kya-bana.log" 2>&1
 ```
 
-`dontAsk` denies every tool not in `--allowedTools`, so checkout can't run even if the model tries. The deny rule is a second lock. For Zepto, run `/mcp` once to see its tool names and add only the search, cart and order-history ones (unverified: Zepto doesn't publish them). Use the full path from `which claude`.
+`Read` is limited to the plugin folder so the agent can read the vendor files. `dontAsk` denies every tool not in `--allowedTools`, so checkout can't run even if the model tries. The deny rule is a second lock. For Zepto, run `/mcp` once to see its tool names and add only the search, cart and order-history ones (unverified: Zepto doesn't publish them). Use the full path from `which claude`.
 
 ## Laptop cron with Codex
 

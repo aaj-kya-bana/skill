@@ -26,8 +26,8 @@ Absent runs fill carts and record things. They never place an order and never as
 4. Do the task by `kind`:
    - `fill_cart`: build the shopping list, fill the vendor cart (below), then `complete_task` with the Cart and `set_cook_card` for that helper and date.
    - `plan_takeout`: search the food app, `complete_task` with a TakeoutPlan of two or three suggestions. Build no food cart unless the person asks.
-   - `sync_orders`: see step 5, then `complete_task` with `{}` (unverified: the result shape for `sync_orders` is not in the contract, so check the tool schema).
-5. `get_orders` from each vendor you are connected to, `record_orders` with what they show (recording twice is a no-op), and `update_pantry` to `have` for groceries that arrived.
+   - `sync_orders`: see step 5, then `complete_task` with `{ synced: <number of orders you recorded> }`.
+5. Read each vendor's file first (links under "Filling the cart"), then `get_orders` from each vendor you are connected to. For Instamart pass `orderType: "INSTAMART"`; the default returns nothing. Then `record_orders` with what they show (recording twice is a no-op), and `update_pantry` to `have` for groceries that arrived.
 6. If the vendor errors or nothing usable comes back, `fail_task` with a reason the person can act on ("Instamart doesn't deliver to the saved address"). If you must stop midway, `release_task`. Never leave a task claimed.
 
 `log_activity` covers anything the other tools don't record, such as a cart you filled in a second app.
@@ -38,7 +38,7 @@ Absent runs fill carts and record things. They never place an order and never as
 - Respect `household.diet`. Don't add eggs for a veg home.
 - Never buy, plan or order anything in `tastes.avoid`. Follow `tastes.notes`.
 - Do only the jobs in `household.jobs`. Skip a task whose job isn't enabled and say so.
-- Skip anything in `household.staples`. Skip pantry items at `have`. Buy items at `low` or `out`.
+- Skip anything in `household.staples`. Skip pantry items at `have`. Buy items at `low` or `out`. An ingredient the pantry doesn't list is needed: buy it unless it is a staple.
 - Merge the same ingredient across dishes and record every dish it serves in `forDishes`.
 - Pick the pack, or count of packs, that covers the recipe quantity with the least left over. 600 g of tomatoes is one 500 g pack plus one 250 g pack, or a 1 kg pack if that is cheaper, not three 500 g packs.
 - Prices come only from the vendor's tool results. A price you didn't see is `null`. Never estimate one.
@@ -87,6 +87,6 @@ Read [references/cook-languages.md](references/cook-languages.md) before your fi
 ## Other requests
 
 - **Plan the week**: read `get_plan` for the coming 7 days and `get_household`. Propose dishes for the slots each cook visit `covers`, matching `diet` and drawn from `tastes.cuisines` and `tastes.likes`, never `tastes.dislikes`, then `set_meals` once the person agrees. In an absent run, fill only empty slots.
-- **Cook is off**: the person marks the absence in the Aaj Kya Bana app, which creates `plan_takeout` tasks. Run those. There is no MCP tool for absences.
+- **Cook is off**: call `set_absence` for that helper and date (or the person marks it in the app). That creates `plan_takeout` tasks and skips the cart. Run those.
 - **Cleaning**: you can't book Snabbit, Pronto or Urban Company InstaHelp. Tell the person the Aaj Kya Bana app opens their cleaning app in one tap.
 - **Scheduling this loop**: [references/scheduling.md](references/scheduling.md).
