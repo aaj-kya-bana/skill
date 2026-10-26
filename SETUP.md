@@ -1,6 +1,6 @@
 # Setup
 
-You connect four MCP servers and, where the client supports it, install the skill.
+You connect four MCP servers. That is all a client needs: the Aaj Kya Bana server sends the skill's rules as its instructions and through its `get_guide` tool. The skill itself is optional, for Claude Code.
 
 | server | URL | sign-in |
 |---|---|---|
@@ -16,7 +16,7 @@ Cloud clients (Claude, ChatGPT) connect from their own servers, so `localhost` w
 ## Claude (claude.ai, Desktop, mobile)
 
 1. Customize > Connectors > + Add > Add custom connector. Add each server above by name and URL, then Connect and sign in. Free plans get one custom connector.
-2. Skill (unverified: the menu path): upload the `aaj-kya-bana` folder as a zip under Customize > Skills. Without it, the Aaj Kya Bana prompts `plan_my_week`, `fill_tomorrows_cart`, `cook_is_off_today` and `sync_my_orders` still run the loop.
+2. Nothing else to install. The server carries the skill's rules, and its prompts `plan_my_week`, `fill_tomorrows_cart`, `cook_is_off_today` and `sync_my_orders` run the loop.
 3. To run it on a schedule, create a routine: [scheduling.md](aaj-kya-bana/references/scheduling.md#claude-code-routine-cloud-recommended).
 
 ## ChatGPT
@@ -27,7 +27,7 @@ Unverified: OpenAI's help page returned 403. These steps are from Zepto's and Sw
 2. Create an app for each server with its URL. Sign in when the OAuth window opens.
 3. In a chat, mention the app (`@zepto`) or pick it from the tools menu, then ask "Fill tomorrow's cart with Aaj Kya Bana".
 
-ChatGPT doesn't load `SKILL.md`. The Aaj Kya Bana server's prompts carry the loop.
+ChatGPT doesn't load skills. The Aaj Kya Bana server sends the same rules as its instructions, and its tool descriptions tell the model to read them with `get_guide` (unverified: whether ChatGPT passes server instructions to the model; the tool descriptions cover it either way).
 
 ## Claude Code
 

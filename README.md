@@ -15,7 +15,7 @@ It never places an order on a schedule. When you are in the chat and ask it to, 
 
 ## Install
 
-See [SETUP.md](SETUP.md). In Claude Code:
+Adding the Aaj Kya Bana server as a connector is enough. The server sends this skill's rules to the agent itself, so Claude and ChatGPT behave the same without it. Installing the skill is optional, for Claude Code. See [SETUP.md](SETUP.md). In Claude Code:
 
 ```sh
 /plugin marketplace add OWNER/REPO
