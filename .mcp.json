@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "aaj-kya-bana": {
+      "type": "http",
+      "url": "${AKB_MCP_URL:-http://localhost:8787/mcp}"
+    },
+    "swiggy-instamart": {
+      "type": "http",
+      "url": "https://mcp.swiggy.com/im"
+    },
+    "zepto": {
+      "type": "http",
+      "url": "https://mcp.zepto.co.in/mcp"
+    },
+    "zomato": {
+      "type": "http",
+      "url": "https://mcp-server.zomato.com/mcp"
+    }
+  }
+}

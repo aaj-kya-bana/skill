@@ -1,0 +1,9 @@
+{
+  "name": "aaj-kya-bana",
+  "version": "0.1.0",
+  "description": "Plan meals, fill Swiggy Instamart or Zepto carts before the cook comes, write the cook card, and keep Aaj Kya Bana's order ledger.",
+  "author": { "name": "Aaj Kya Bana" },
+  "license": "MIT",
+  "keywords": ["meal-planning", "groceries", "instamart", "zepto", "zomato", "india", "mcp"],
+  "skills": ["./"]
+}

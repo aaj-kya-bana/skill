@@ -1,0 +1,14 @@
+{
+  "name": "aaj-kya-bana",
+  "description": "Aaj Kya Bana: the household loop for Indian homes with a cook, for any MCP agent.",
+  "owner": {
+    "name": "Aaj Kya Bana"
+  },
+  "plugins": [
+    {
+      "name": "aaj-kya-bana",
+      "source": "./",
+      "description": "Teaches your agent the Aaj Kya Bana household loop with the Swiggy Instamart, Zepto and Zomato MCP servers."
+    }
+  ]
+}
