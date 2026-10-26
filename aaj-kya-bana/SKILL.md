@@ -26,7 +26,6 @@ Absent runs fill carts and record things. They never place an order and never as
 4. Do the task by `kind`:
    - `fill_cart`: build the shopping list, fill the vendor cart (below), then `complete_task` with the Cart and `set_cook_card` for that helper and date.
    - `plan_takeout`: search the food app, `complete_task` with a TakeoutPlan of two or three suggestions. Build no food cart unless the person asks.
-   - `check_pantry`: `get_pantry_check`, look at every photo, `update_pantry` with level, `amount` and `confidence` for each item you can see (out = none or empty container; low = under 3 days of planned meals, or under a quarter of capacity for a staple). Then `complete_task` with `{ changed, unreadable }`. Never guess an item you can't see.
    - `sync_orders`: see step 5, then `complete_task` with `{ synced: <number of orders you recorded> }`.
 5. Read each vendor's file first (links under "Filling the cart"), then `get_orders` from each vendor you are connected to. For Instamart pass `orderType: "INSTAMART"`; the default returns nothing. Then `record_orders` with what they show, including each grocery order's `items` (plain ingredient name, product, pack, count, whole-line amount, price) from the vendor's order detail (recording twice is a no-op), and `update_pantry` to `have` for groceries that arrived.
 6. If the vendor errors or nothing usable comes back, `fail_task` with a reason the person can act on ("Instamart doesn't deliver to the saved address"). If you must stop midway, `release_task`. Never leave a task claimed.
@@ -88,6 +87,7 @@ Read [references/cook-languages.md](references/cook-languages.md) before your fi
 ## Other requests
 
 - **Plan the week**: read `get_plan` for the coming 7 days and `get_household`. Propose dishes for the slots each cook visit `covers`, matching `diet` and drawn from `tastes.cuisines` and `tastes.likes`, never `tastes.dislikes`, then `set_meals` once the person agrees. In an absent run, fill only empty slots.
+- **Check the pantry from photos** (`check_my_pantry`): look at every photo the person attached. Use `household.spots` to turn "a third of the rice dabba" into an amount. For each item you can see, `update_pantry` with `level`, `amount` and `confidence` (out = none or empty; low = under 3 days of planned meals, or under a quarter of capacity for a staple). Never guess an item you can't see; list those in your reply. Photos stay in this chat; never upload them anywhere.
 - **Cook is off**: call `set_absence` for that helper and date (or the person marks it in the app). That creates `plan_takeout` tasks and skips the cart. Run those.
 - **Cleaning**: you can't book Snabbit, Pronto or Urban Company InstaHelp. Tell the person the Aaj Kya Bana app opens their cleaning app in one tap.
 - **Scheduling this loop**: [references/scheduling.md](references/scheduling.md).
