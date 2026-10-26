@@ -32,11 +32,11 @@ ChatGPT doesn't load skills. The Aaj Kya Bana server sends the same rules as its
 ## Claude Code
 
 ```sh
-/plugin marketplace add OWNER/REPO        # this repo on GitHub, or ./skill from a clone
+/plugin marketplace add aajkyabana/aaj-kya-bana-skill   # or ./skill from a clone of the app repo
 /plugin install aaj-kya-bana@aaj-kya-bana
 ```
 
-That installs the skill, the four servers, and `/aaj-kya-bana:plan-week`, `fill-cart`, `cook-off` and `sync-orders`. Point at a deployed server with `export AKB_MCP_URL=https://your-host/mcp` before starting Claude Code. Then run `/mcp` and sign in to each server once.
+That installs the skill, the four servers, and `/aaj-kya-bana:plan-week`, `fill-cart`, `cook-off` and `sync-orders`. It connects to `https://api.aajkyabana.com/mcp`; for a local server, `export AKB_MCP_URL=http://localhost:8787/mcp` before starting Claude Code. Then run `/mcp` and sign in to each server once.
 
 Tested on Claude Code 2.1.306: the marketplace adds, the plugin installs, and `claude mcp list` shows all four servers with the `AKB_MCP_URL` default and override.
 
