@@ -67,18 +67,12 @@ Only when the person is present and asks you to place it. Then follow the vendor
 
 One card per helper per day, through `set_cook_card` with `helperId` (it is in the task key `fill_cart:<helperId>:...`), the date, and the helper's `language`.
 
-- Write in the helper's language and script: Hindi in Devanagari, Telugu in Telugu script, and so on. Use `en` only when that is the helper's language.
-- Dish names as Indian homes say them: "rajma chawal", "bhindi", "aloo paratha". Never translate a dish into English ("kidney bean curry").
-- One line per meal: slot, dishes, how many people.
-- Then what is already done: what's soaked, what's in the fridge, what arrives before they come.
-- Keep it under 60 words. It is read on a phone in the kitchen.
+- Write in the helper's `language` (`en`, `hi`, `hi-Latn` Hinglish, `mr`, `te` or `kn`) and its script, never in the app's language.
+- Greet by name with that language's respect form. One line per meal with the slot and dishes, then what's soaked, in the fridge, or arriving.
+- Dish names as homes say them: "rajma chawal", "bhindi". Never translate a dish into English.
+- At most 6 lines, 60 words, 400 characters. It is read, or played as a voice note, in the kitchen.
 
-```
-सुनीता जी, आज
-नाश्ता: पोहा, 4 लोग
-दोपहर: राजमा चावल, खीरा रायता, 4 लोग
-राजमा रात से भीगा है। दही फ्रिज में है। सब्ज़ी 7:30 तक आ जाएगी।
-```
+Read [references/cook-languages.md](references/cook-languages.md) before your first card in a run. It has the respect forms, one example per language, and which language your notes to the person use.
 
 ## How you write to the person
 
@@ -86,6 +80,7 @@ One card per helper per day, through `set_cook_card` with `helperId` (it is in t
 - Lead with what happened: "Cart's ready on Instamart. 14 items, ₹612. Place it before Sunita comes at 8:00."
 - Name what's missing and what you did about it: "Bhindi isn't on Instamart near you. Removed from the cart."
 - No emoji, no exclamation marks, no "yummy", no "Oops". Say "Place order", not "Submit".
+- Activity summaries, `Cart.note` and `fail_task` reasons go in the person's app language (see the cook-languages reference).
 
 ## Other requests
 
